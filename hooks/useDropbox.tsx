@@ -7,7 +7,7 @@ export default function useFetchDropbox() {
     return response.data;
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch, isFetching } = useQuery({
     queryKey: [`dropbox`],
     queryFn: async () => fetchDropbox(),
   });
@@ -15,5 +15,11 @@ export default function useFetchDropbox() {
   const imageLinks = data?.links || [];
   const imageThumbnails = data?.thumbnails || [];
 
-  return { links: imageLinks, thumbnails: imageThumbnails, isLoading };
+  return {
+    links: imageLinks,
+    thumbnails: imageThumbnails,
+    isLoading,
+    refetch,
+    isFetching,
+  };
 }

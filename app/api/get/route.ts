@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const result = await init();
+  console.log(result);
   return NextResponse.json(result);
 }
 const init = async () => {
@@ -28,7 +29,11 @@ const updateFiles = async (files: any[]) => {
 const getDownloadableLinks = async (files: any[]) => {
   const images = await Promise.all(
     files.map(async function (file: any) {
-      if (file.name.endsWith(".jpg") || file.name.endsWith(".png")) {
+      if (
+        file.name.endsWith(".jpg") ||
+        file.name.endsWith(".png") ||
+        file.name.endsWith(".jpeg")
+      ) {
         const linkResponse = await dbx.filesGetTemporaryLink({
           path: file.path_lower,
         });
@@ -49,7 +54,9 @@ const getThumbnails = async (files: File[]) => {
     .filter(
       (file: any) =>
         file[".tag"] === "file" &&
-        (file.name.endsWith(".jpg") || file.name.endsWith(".png"))
+        (file.name.endsWith(".jpg") ||
+          file.name.endsWith(".png") ||
+          file.name.endsWith(".jpeg"))
     )
     .map((file: any) => ({
       path: file.path_lower,
