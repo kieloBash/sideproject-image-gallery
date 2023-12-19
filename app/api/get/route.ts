@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const result = await init();
-  console.log(result);
+  // console.log(result);
   return NextResponse.json(result);
 }
 const init = async () => {
